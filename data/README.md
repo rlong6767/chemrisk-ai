@@ -62,6 +62,20 @@ The public version of this repository avoids company-specific identifiers, priva
 
 ---
 
+## Why Not Just Use a General-Purpose LLM?
+
+A general-purpose LLM could be valuable in a future version of this workflow, especially for extracting structured information from Safety Data Sheets. However, this project does not rely on an LLM as the final decision-maker.
+
+For safety-critical safeguard recommendations, the system needs more than plausible chemical reasoning. It needs a controlled schema, reproducible decision logic, audit traceability, versioned calibration, leakage-safe evaluation, explicit uncertainty handling, and human-in-the-loop review.
+
+In a future production architecture, an LLM or SDS parser could help map raw SDS text into structured chemical classes and hazard features. ChemRisk-AI would then use those structured features to produce mechanism-aware recommendations, direction-specific scenarios, and tank-level review routing.
+
+In short:
+
+- LLMs are useful for reading and extracting information from unstructured documents.
+- ChemRisk-AI is designed for controlled, auditable decision routing.
+- The safest architecture would combine both rather than use either one alone.
+  
 ## Project objective
 
 The Phase 1 MVP demonstrates a reproducible workflow that:
@@ -342,6 +356,16 @@ The current Phase 1 MVP has important limitations:
 - Directionality is handled through scenario expansion and review routing, not first-principles concentration modeling.
 - Stored-service reliability flags are screening proxies and require site validation before crediting RTD.
 - Safety-critical decisions remain human-in-the-loop.
+
+---
+
+## Potential Business Impact
+
+A common failure mode in conservative process-safety screening is blanket mitigation scoping: every high-severity incompatibility is treated as if it requires the same hardware safeguard. For RTD installation projects, this can create substantial capital scope even when many scenarios are dominated by toxic gas, pressure, phase behavior, fouling, or kinetics too fast for temperature-based prevention.
+
+In one representative 30–40 tank screening scenario, blanket RTD installation was estimated at approximately $1.5MM. The ChemRisk-AI workflow narrowed the candidate set to roughly 10 services/tanks requiring engineering validation. Using the original screening estimate as a rough basis, this represents a potential CapEx avoidance opportunity of approximately $1.0MM–$1.1MM, pending site validation and final engineering approval.
+
+This estimate is directional. ChemRisk-AI does not authorize scope reduction by itself; it provides auditable evidence for engineering review.
 
 ---
 
