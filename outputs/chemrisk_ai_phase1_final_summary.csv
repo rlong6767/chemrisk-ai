@@ -1,0 +1,28 @@
+section,metric,value
+Dataset,Public chemical-pair rows,313
+Dataset,Directional scenario rows,626
+Audit,Combined audited rows,36
+Audit,Audited RTD-required rows,5
+Audit,Audited RTD-not-required rows,31
+Training pool,Post-audit leakage-safe rows,271
+Training pool,v1.2b weak-labeled training rows,271
+Training pool,v1.2b RTD-required weak labels in training pool,11
+Training pool,v1.2b RTD-required fraction in training pool,4.1%
+v1.2b audit calibration,accuracy,97.2%
+v1.2b audit calibration,balanced_accuracy,98.4%
+v1.2b audit calibration,precision_rtd,83.3%
+v1.2b audit calibration,recall_rtd,100.0%
+v1.2b audit calibration,f1_rtd,90.9%
+v1.2b audit calibration,false_positive,1
+v1.2b audit calibration,false_negative,0
+v1.2b grouped CV model,balanced_accuracy,98.3%
+v1.2b grouped CV model,precision_rtd,55.0%
+v1.2b grouped CV model,recall_rtd,100.0%
+v1.2b grouped CV model,f1_rtd,71.0%
+v1.2b grouped CV model,average_precision,60.0%
+v1.2b grouped CV model,roc_auc,98.2%
+v1.2b grouped CV model,false_positive,9
+v1.2b grouped CV model,false_negative,0
+Pair-level final overlay,RTD not required pair recommendations,279
+Pair-level final overlay,RTD required pair recommendations before directional validation,12
+Pair-level final overlay,Model-challenge review pair recommendations,22

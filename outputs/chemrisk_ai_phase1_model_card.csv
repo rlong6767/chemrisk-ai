@@ -1,0 +1,17 @@
+model_card_item,summary
+Project name,ChemRisk-AI Phase 1 MVP
+Primary decision,"Whether RTD is useful, creditable, and practical as a safeguard for incompatible mixing scenarios"
+Primary target,"Pair-level RTD required vs. not required, with Review routing"
+Model type,Weak-supervised tabular model with mechanism-aware rules and grouped cross-validation
+Training label source,Engineering labeling functions calibrated against audited chemical-pair reviews
+Training-data limitation,"No direct kinetics, heat of reaction, tank inventory, concentration, transfer-rate, or incident-outcome data"
+Validation approach,Initial 21-row development audit plus 15-row prospective stress-test audit; both become development/calibration data once used for v1.2b
+Leakage controls,Audited rows and repeated canonical chemical-pair groups excluded from model training
+Final calibrated LF version,Corrected v1.2b
+Primary diagnostic model,v12b_logreg_balanced_evidence_weighted
+Directionality handling,Each pair expanded into A_into_B and B_into_A directional scenarios
+Tank-level handling,Stored chemical service used as a Phase 1 proxy for tank service; actual deployment requires site tank map
+Human-in-the-loop requirement,Required for all safety-critical decisions
+Not intended for,"Automatic safeguard approval, chemical truth prediction, first-principles reaction modeling, or replacing HAZOP / PHA review"
+Appropriate use,"Screening, prioritization, audit support, RTD applicability review, and engineering decision support"
+Next validation step,Apply frozen v1.2b to additional prospective audit rows or a site-specific tank map with tank inventory and service data

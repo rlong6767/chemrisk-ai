@@ -1,0 +1,9 @@
+figure_file,recommended_use
+01_chemrisk_ai_architecture.png,README overview and presentation intro
+02_v12b_class_imbalance.png,Model limitation / class imbalance explanation
+03_v12b_audit_confusion_matrix.png,Audit calibration result
+04_v12b_grouped_cv_metrics.png,Model performance summary
+05_pair_level_recommendation_distribution.png,Final pair-level decision output
+06_directional_scenario_recommendation_distribution.png,Directionality-aware expansion result
+07_stored_service_recommendation_distribution.png,Tank/service-level aggregation result
+08_rtd_candidate_stored_service_priorities.png,RTD-candidate stored-service prioritization
