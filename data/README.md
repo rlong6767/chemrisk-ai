@@ -48,15 +48,45 @@ In those cases, an RTD can appear attractive because the reaction “generates h
 
 ## Why this project is useful beyond one company
 
-This is a generalized industrial AI pattern for process industries where:
+ChemRisk-AI should be understood as a **generalizable workflow**, not as a finished universal chemical-compatibility product.
 
-1. domain experts maintain conservative hazard screening data,
-2. clean incident or lab-outcome labels are sparse,
-3. decisions are safety-critical,
-4. false certainty is dangerous,
-5. and site context still matters.
+The current Phase 1 model was developed from a structured chemical-pair screening dataset. That means the model is most directly useful when a site already has, or can create, similar structured inputs:
 
-The same workflow could apply to other specialty chemical, pharmaceutical, food ingredient, water treatment, polymer, or bulk-liquid operations that need to convert incompatibility matrices into safeguard-specific review priorities.
+- chemical-pair combinations,
+- generic chemical classes,
+- consequence / severity screening,
+- heat-generation flags,
+- gas-generation flags,
+- toxic-gas flags,
+- fire / flammability flags,
+- corrosion flags,
+- reaction-type or mechanism indicators,
+- and enough site context to map stored chemicals to tank services.
+
+That limitation is important. The current model should **not** be presented as a tool that can accept any arbitrary site inventory or SDS library and automatically produce final RTD installation scope. A broader production version would need additional chemical coverage, controlled SDS or compatibility-matrix ingestion, confidence-scored mapping from actual chemicals to generic mechanism classes, tank inventory data, and multi-site validation.
+
+The value of the Phase 1 project is the decision-support architecture:
+
+```text
+Conservative incompatibility screening
+→ mechanism-aware RTD creditability logic
+→ weak-supervision label generation
+→ audit-calibrated model review
+→ directionality expansion
+→ stored-service / tank-level aggregation
+→ plain-English design-basis explanations
+```
+
+That workflow is useful beyond one company because many process-industry sites face the same problem: conservative incompatibility screens identify many severe scenarios, but they do not directly answer whether a specific safeguard, such as an RTD, is useful, creditable, and practical.
+
+In a future deployment, each site would not need to create its own audited ML dataset from scratch. Instead, a central or corporate model-development process would maintain the chemical-class library, audited examples, labeling functions, model versions, and validation history. Each site would provide its own tank list, chemical inventory, SDSs or compatibility matrix, concentration/grade information, and credible transfer scenarios. The system would then generate tank-level RTD review recommendations with clear uncertainty and mapping-confidence flags.
+
+In short:
+
+- the **current model** is calibrated to the available structured dataset,
+- the **current Florence-style use case** can use the model to support RTD scope review,
+- the **generalizable contribution** is the auditable workflow and explanation framework,
+- and broader deployment would require SDS ingestion, chemical mapping controls, expanded audits, and multi-site validation.
 
 The public version of this repository avoids company-specific identifiers, private audit workbooks, raw engineering notes, site names, tank IDs, and real deployment data.
 
@@ -75,7 +105,34 @@ In short:
 - LLMs are useful for reading and extracting information from unstructured documents.
 - ChemRisk-AI is designed for controlled, auditable decision routing.
 - The safest architecture would combine both rather than use either one alone.
-  
+
+---
+
+## Current MVP vs. Future Product
+
+**MVP** means **Minimum Viable Product**: the smallest working version that demonstrates the core workflow and value proposition. For ChemRisk-AI, the Phase 1 MVP is not a broad commercial product. It is a reproducible decision-support workflow that shows how conservative chemical incompatibility screening data can be converted into RTD-specific, direction-aware engineering review recommendations.
+
+The current MVP is useful because it demonstrates the decision architecture:
+
+- rebuild conservative screening logic in Python,
+- apply mechanism-aware weak supervision,
+- calibrate rules with audited engineering review rows,
+- train leakage-safe tabular models,
+- route model disagreements to Review,
+- expand pair-level results into `A_into_B` and `B_into_A` directional scenarios,
+- and aggregate directional scenarios into service/tank-level review priorities.
+
+The current MVP does **not** claim to classify arbitrary chemicals from raw SDS files or generalize to every site without additional data. The future product would add SDS ingestion, chemical identity normalization, confidence-scored class mapping, tank inventory mapping, and multi-site validation.
+
+| Phase | Scope | Status |
+|---|---|---|
+| Phase 1 | Weak-supervised MVP using structured chemical-pair data, audited calibration, model-assisted review, and direction-aware tank/service aggregation | Completed in this repository |
+| Phase 2 | Synthetic demo app where users can select generic chemical classes and view recommendation explanations | Future enhancement |
+| Phase 3 | SDS ingestion and chemical class mapping using NLP/LLM-assisted extraction plus deterministic validation checks | Future product direction |
+| Phase 4 | Multi-site validation with larger audited datasets, tank maps, inventory context, and outcome/lab data where available | Future product direction |
+
+---
+
 ## Project objective
 
 The Phase 1 MVP demonstrates a reproducible workflow that:
@@ -140,7 +197,22 @@ The final model does **not** silently override the mechanism-aware weak-label la
 
 This is intentional. In a safety-critical workflow, model disagreement is a signal for engineering attention, not a reason to automate a safeguard decision.
 
-### 5. Direction-aware tank/service layer
+### 5. Row-level explanation layer
+
+The public notebook now includes a row-level explanation builder. This layer turns model and rule outputs into engineer-readable explanation fields instead of leaving recommendations as unexplained model predictions.
+
+For each pair or directional scenario, the explanation layer can report:
+
+- the final recommendation,
+- the primary reason,
+- mechanism evidence from labeling functions and proxy flags,
+- model evidence such as score, disagreement, or near-boundary behavior,
+- missing tank/site context,
+- and site-validation requirements before RTD is credited or rejected.
+
+This explanation layer is more important than treating the tabular model as a black box. In a safety-critical workflow, a recommendation should be traceable to engineering logic and review conditions, not only to a probability score.
+
+### 6. Direction-aware tank/service layer
 
 A chemical pair `A + B` is expanded into two conceptual scenarios:
 
@@ -248,8 +320,8 @@ chemrisk-ai/
 ├── notebooks/
 │   └── 01_chemrisk_ai_phase1_mvp_final_public.ipynb
 ├── docs/
-│   ├── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1.docx
-│   └── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1.pdf
+│   ├── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.docx
+│   └── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.pdf
 ├── figures/
 │   ├── 01_chemrisk_ai_architecture.png
 │   ├── 02_v12b_class_imbalance.png
@@ -374,13 +446,15 @@ This estimate is directional. ChemRisk-AI does not authorize scope reduction by 
 Potential next steps:
 
 1. Build a fully synthetic public dataset so the notebook can run end-to-end without private files.
-2. Expand the prospective audit set, especially RTD-required positive examples.
-3. Add feature attribution or SHAP-style explanations for model-assisted review cases.
-4. Build a Streamlit demo using synthetic scenarios.
+2. Create a lightweight Streamlit or CLI demo using synthetic scenarios and the row-level explanation layer.
+3. Expand the prospective audit set, especially RTD-required positive examples and difficult Review cases.
+4. Add feature attribution or SHAP-style explanations for model-assisted review cases if deeper model-level explanation is useful.
 5. Join the directional scenario output to a real or synthetic tank map.
 6. Add concentration, inventory, transfer-rate, and tank-geometry features.
 7. Incorporate SDS/NLP feature extraction for broader generalization.
-8. Compare RTD recommendations against lab or incident/outcome data if available.
+8. Add chemical-name normalization, CAS/synonym handling, and confidence-scored generic class mapping.
+9. Compare RTD recommendations against lab or incident/outcome data if available.
+10. Validate across multiple sites or synthetic site portfolios before claiming broad industry generalization.
 
 ---
 
