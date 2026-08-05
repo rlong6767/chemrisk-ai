@@ -342,8 +342,8 @@ chemrisk-ai/
 ├── notebooks/
 │   └── 01_chemrisk_ai_phase1_mvp_final_public_v8.ipynb
 ├── docs/
-│   ├── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.docx
-│   └── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.pdf
+│   ├── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_2.docx
+│   └── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_2.pdf
 ├── figures/
 │   ├── 01_chemrisk_ai_architecture.png
 │   ├── 02_v12b_class_imbalance.png
