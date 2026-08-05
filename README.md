@@ -340,7 +340,7 @@ chemrisk-ai/
 ├── LICENSE
 ├── .gitignore
 ├── notebooks/
-│   └── 01_chemrisk_ai_phase1_mvp_final_public.ipynb
+│   └── 01_chemrisk_ai_phase1_mvp_final_public_v8.ipynb
 ├── docs/
 │   ├── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.docx
 │   └── ChemRisk_AI_Capstone_Design_Doc_Final_GitHub_Review_v1_1.pdf
