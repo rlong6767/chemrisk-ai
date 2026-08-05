@@ -197,9 +197,9 @@ The final model does **not** silently override the mechanism-aware weak-label la
 
 This is intentional. In a safety-critical workflow, model disagreement is a signal for engineering attention, not a reason to automate a safeguard decision.
 
-### 5. Row-level explanation layer
+### 5. Explanation layers: row-level, directional, and service-level design basis
 
-The public notebook now includes a row-level explanation builder. This layer turns model and rule outputs into engineer-readable explanation fields instead of leaving recommendations as unexplained model predictions.
+The public notebook includes explanation builders that turn model and rule outputs into engineer-readable fields instead of leaving recommendations as unexplained model predictions.
 
 For each pair or directional scenario, the explanation layer can report:
 
@@ -210,7 +210,19 @@ For each pair or directional scenario, the explanation layer can report:
 - missing tank/site context,
 - and site-validation requirements before RTD is credited or rejected.
 
-This explanation layer is more important than treating the tabular model as a black box. In a safety-critical workflow, a recommendation should be traceable to engineering logic and review conditions, not only to a probability score.
+The later service-level explanation sections aggregate those pair/directional explanations into stored-service or tank-facing design-basis outputs. For retained RTD-candidate scenarios, the enhanced chemistry-basis output is intended to show:
+
+- source severity basis,
+- heat-generation basis,
+- reaction type / mechanism class,
+- positive RTD pathway,
+- why an RTD could detect the event,
+- failure modes checked and not found,
+- and remaining site validation needed before RTD credit.
+
+The explanation output also separates **strong positive chemistry basis** cases from **weaker screening-retained** cases. Stronger cases have a specific bulk-thermal chemistry basis, such as bulk acid/base exotherm, protected acid/base RTD pathway, or calibrated RTD-positive pattern. Weaker screening-retained cases have high source severity plus heat and were not eliminated by the no-RTD failure-mode screen, but they require stronger engineering review before final RTD credit.
+
+This explanation layer is more important than treating the tabular model as a black box. In a safety-critical workflow, a recommendation should be traceable to engineering logic, chemistry basis, failure-mode screening, and review conditions, not only to a probability score.
 
 ### 6. Direction-aware tank/service layer
 
@@ -357,6 +369,8 @@ They are not included because they contain private engineering review details an
 
 To run the notebook end-to-end, provide private or synthetic input files matching the schemas in `data/`. A fully runnable synthetic demo is planned as future work.
 
+When the notebook is run with the required inputs, it can also generate additional design-basis exports such as service-level explanations, RTD-candidate scenario details, and enhanced chemistry-basis summaries. Those generated CSV files are useful for private project review, but they should be checked for site-specific or audit-sensitive details before being published.
+
 ---
 
 ## Deployment status
@@ -372,7 +386,8 @@ A future synthetic demonstration could be deployed as a small Streamlit app that
 - labeling-function evidence,
 - review reasons,
 - directional `A_into_B` / `B_into_A` scenarios,
-- and stored-service recommendation.
+- stored-service recommendation,
+- and enhanced chemistry-basis explanations for retained RTD-candidate scenarios.
 
 ---
 
@@ -396,7 +411,7 @@ A future synthetic demonstration could be deployed as a small Streamlit app that
 
 1. Inspect `notebooks/01_chemrisk_ai_phase1_mvp_final_public.ipynb`.
 2. Review the leakage-safe modeling sections.
-3. Review the directionality and tank/service aggregation sections.
+3. Review the directionality, tank/service aggregation, and enhanced chemistry-basis explanation sections.
 4. Compare final metrics with the validation limitations.
 
 ---
@@ -413,6 +428,7 @@ A future synthetic demonstration could be deployed as a small Streamlit app that
 - Model-assisted review routing
 - Directionality-aware scenario expansion
 - Tank/service-level aggregation
+- Plain-English design-basis explanation outputs
 - Responsible ML communication for safety-critical workflows
 - Python, pandas, NumPy, scikit-learn, matplotlib, and Excel-to-Python QA
 
@@ -427,6 +443,8 @@ The current Phase 1 MVP has important limitations:
 - The dataset does not include measured kinetics, heat of reaction, viscosity, tank inventory, transfer rate, mixing quality, thermowell location, or live process data.
 - Directionality is handled through scenario expansion and review routing, not first-principles concentration modeling.
 - Stored-service reliability flags are screening proxies and require site validation before crediting RTD.
+- Source severity is treated as an input basis; the Phase 1 model does not independently calculate or downgrade consequence severity.
+- Retained RTD-candidate scenarios may include both strong positive chemistry-basis cases and weaker screening-retained cases that require additional engineering review before final credit.
 - Safety-critical decisions remain human-in-the-loop.
 
 ---
@@ -446,7 +464,7 @@ This estimate is directional. ChemRisk-AI does not authorize scope reduction by 
 Potential next steps:
 
 1. Build a fully synthetic public dataset so the notebook can run end-to-end without private files.
-2. Create a lightweight Streamlit or CLI demo using synthetic scenarios and the row-level explanation layer.
+2. Create a lightweight Streamlit or CLI demo using synthetic scenarios and the row-level / service-level explanation layers.
 3. Expand the prospective audit set, especially RTD-required positive examples and difficult Review cases.
 4. Add feature attribution or SHAP-style explanations for model-assisted review cases if deeper model-level explanation is useful.
 5. Join the directional scenario output to a real or synthetic tank map.
