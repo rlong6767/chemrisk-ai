@@ -277,7 +277,17 @@ The selected diagnostic model was an evidence-weighted logistic regression model
 | False positives | 9 |
 | False negatives | 0 |
 
-The precision is interpreted in the context of strong class imbalance. Only 4.1% of the training pool is RTD-required, so the model is primarily used to enrich and route rare RTD-candidate scenarios to review rather than automate installation decisions.
+The precision is interpreted in the context of strong class imbalance and the intended safety-biased operating mode. Only 4.1% of the training pool is RTD-required, so the model is primarily used to enrich and route rare RTD-candidate scenarios to review rather than automate installation decisions.
+
+### Why recall was prioritized over precision
+
+For this use case, the model was intentionally tuned and selected to protect recall on the rare RTD-required class. In a safety-critical screening workflow, a false negative could incorrectly screen out a scenario where RTD may deserve engineering review. A false positive, by contrast, routes an additional scenario to review but does not automatically authorize RTD installation.
+
+The selected evidence-weighted logistic regression model achieved 100% recall and zero false negatives in grouped cross-validation, while precision was 55.0%. This means the model was intentionally conservative: it preferred to over-route some scenarios to human review rather than miss a potentially RTD-creditable case.
+
+Because only 11 of 271 leakage-safe training rows were RTD-required weak labels, grouped cross-validation metrics should be interpreted as diagnostic rather than production validation. The workflow addresses this class imbalance by using mechanism-aware labeling functions, audit calibration, evidence-weighted modeling, grouped cross-validation, and review routing for model disagreements or uncertain cases.
+
+The model is therefore not used as an automatic installation decision-maker. It is used as a review overlay that helps surface rare RTD-candidate scenarios while preserving human engineering judgment.
 
 ### Final pair-level overlay
 
