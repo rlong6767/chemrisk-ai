@@ -1,6 +1,6 @@
-# ChemRisk-AI: Mechanism-Aware Safeguard Decision Support
+# ChemRisk-AI: Mechanism Aware Safeguard Decision Support
 
-**ChemRisk-AI** is an industrial AI capstone project focused on chemical process safety. It demonstrates how weak supervision, audited engineering logic, and interpretable tabular modeling can help prioritize whether a **Resistance Temperature Detector (RTD)** is a useful safeguard for an incompatible chemical mixing scenario.
+ChemRisk-AI is an industrial AI capstone project focused on chemical process safety. It demonstrates how weak supervision, audited engineering logic, and interpretable tabular modeling can help prioritize whether a **Resistance Temperature Detector (RTD)** is a useful safeguard for an incompatible chemical mixing scenario.
 
 This project is intentionally framed as **decision support**, not automated safety approval. It shows how machine learning can help organize conservative screening data, surface review cases, and convert pair-level chemical incompatibility information into direction-aware tank/service recommendations.
 
