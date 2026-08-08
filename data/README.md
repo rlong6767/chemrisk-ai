@@ -18,21 +18,21 @@ ChemRisk-AI addresses one practical engineering question:
 
 > **When two incompatible chemicals could be accidentally mixed, is an RTD useful, creditable, and practical as a safeguard?**
 
-The project uses a mechanism-aware weak-supervision workflow to classify chemical-pair scenarios as:
+The project uses a mechanism-aware weak supervision workflow to classify chemical pair scenarios as the following:
 
-- **RTD not required** based on current screening logic,
-- **RTD candidate / RTD required** before tank-level validation,
-- or **Review** when model disagreement, directionality, inventory, or stored-service reliability prevents a confident automated recommendation.
+- RTD not required based on current screening logic,
+- RTD candidate / RTD required before tank-level validation,
+- or Review when model disagreement with labeling functions, directionality, inventory, or stored service reliability prevents a confident automated recommendation.
 
 ---
 
 ## What is an RTD, and why does this matter?
 
-An **RTD** is a Resistance Temperature Detector: an instrument used to measure temperature in a tank or process vessel.
+An RTD is a Resistance Temperature Detector: an instrument used to measure temperature in a tank or process vessel.
 
-For incompatible mixing safeguards, an RTD may be useful when the hazardous event creates a **detectable bulk liquid temperature rise** soon enough for alarm, operator response, interlock action, or another protective response.
+For incompatible mixing safeguards, an RTD may be useful when the hazardous event creates a detectable bulk liquid temperature rise soon enough for alarm, operator response, interlock action, or another protective response.
 
-However, an RTD may be the wrong safeguard when the dominant hazard is:
+However, an RTD may be the wrong safeguard when the dominant hazard is the following:
 
 - toxic gas or vapor release,
 - rapid gas generation or pressure rise,
@@ -40,9 +40,9 @@ However, an RTD may be the wrong safeguard when the dominant hazard is:
 - localized reaction faster than bulk temperature detection,
 - gel, sludge, precipitation, coating, or fouling,
 - poor mixing or phase separation,
-- or an unresolved tank directionality issue.
+- unresolved transfer direction or receiving tank context, such as whether `A_into_B` or `B_into_A` is the credible scenario.
 
-In those cases, an RTD can appear attractive because the reaction “generates heat,” but it may not provide creditable risk reduction. ChemRisk-AI focuses on that distinction.
+In those cases, an RTD can appear attractive because the reaction “generates heat,” but it may not provide creditable risk reduction because the dominant hazard may not create a representative bulk liquid temperature rise soon enough for RTD detection and response. Directionality matters because an RTD is installed on a specific tank. If the credible scenario is chemical A entering a tank of B, the relevant inventory, dilution, mixing, RTD location, and response basis may be different than if chemical B enters a tank of A. ChemRisk-AI focuses on that distinction.
 
 ---
 
