@@ -10,9 +10,9 @@ This project is intentionally framed as decision support, not automated safety a
 
 ## Executive summary
 
-Chemical manufacturing and bulk liquid storage operations commonly rely on chemical compatibility information, such as compatibility charts, SDS guidance, segregation rules, process knowledge, and site-specific review tables. These tools may identify whether two materials are compatible or incompatible, but they often do not directly answer what safeguard is most appropriate if the materials are accidentally mixed. More detailed incompatibility screens may identify potential consequences such as heat generation, gas evolution, toxic vapor release, pressure rise, fire, corrosion, or fouling
+Chemical manufacturing and bulk liquid storage operations commonly rely on chemical compatibility information, such as compatibility charts, SDS guidance, segregation rules, process knowledge, and site-specific review tables. These tools may identify whether two materials are compatible or incompatible, but they often do not directly answer what safeguard is most appropriate if the materials are accidentally mixed. More detailed incompatibility screens may identify potential consequences such as heat generation, gas evolution, toxic vapor release, pressure rise, fire, corrosion, or fouling.
 
-Those screens are often intentionally conservative. That conservatism is appropriate for safety, but it can make mitigation decisions difficult. A high-severity chemical pair does **not** automatically mean a temperature sensor is the right safeguard.
+Those screens are often intentionally conservative. That conservatism is appropriate for safety, but it can make mitigation decisions difficult. A high-severity chemical pair does not automatically mean an installed temperature sensor, which is intended to detect the incompatible reaction, is the right safeguard for the storage tank.
 
 ChemRisk-AI addresses one practical engineering question:
 
