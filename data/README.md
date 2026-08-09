@@ -26,7 +26,7 @@ To run the notebook end-to-end, one of the following would be needed:
 2. a synthetic dataset created to match the same schema, chemical-class vocabulary, and allowed categorical values, or
 3. a new site dataset that has first been mapped, reviewed, and normalized into the same generic ChemRisk-AI feature format.
 
-A user should not assume that simply renaming their own chemical compatibility file to match these column headers is sufficient. Actual chemicals must be mapped to the generic labels/classes used by the model, and that mapping would require SME review, SDS or compatibility-matrix interpretation, concentration/grade checks, and validation of whether the modeled generic class is appropriate.
+A user should not assume that simply renaming their own chemical compatibility file to match these column headers is sufficient. Actual chemicals must be mapped to the generic labels/classes used by the model, and that mapping would require SME review, SDS or compatibility matrix interpretation, concentration/grade checks, and validation of whether the modeled generic class is appropriate.
 
 Do not commit private source workbooks, real site identifiers, tank IDs, raw engineering notes, or detailed audit comments to the public repository.
 
