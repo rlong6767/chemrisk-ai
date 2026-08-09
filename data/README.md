@@ -48,19 +48,19 @@ In those cases, an RTD can appear attractive because the reaction “generates h
 
 ## Why this project is useful beyond one company
 
-ChemRisk-AI should be understood as a **generalizable workflow**, not as a finished universal chemical-compatibility product.
+ChemRisk-AI should be understood as a generalizable workflow, not as a finished universal chemical compatibility product.
 
-The current Phase 1 model was developed from a structured chemical-pair screening dataset. That means the model is most directly useful when a site already has, or can create, similar structured inputs:
+The current Phase 1 model was developed from a structured chemical pair screening dataset. That means the model is most directly useful when a site already has, or can create, similar structured inputs:
 
-- chemical-pair combinations,
+- chemical pair combinations,
 - generic chemical classes,
 - consequence / severity screening,
-- heat-generation flags,
-- gas-generation flags,
-- toxic-gas flags,
+- heat generation flags,
+- gas generation flags,
+- toxic gas flags,
 - fire / flammability flags,
 - corrosion flags,
-- reaction-type or mechanism indicators,
+- reaction type or mechanism indicators,
 - and enough site context to map stored chemicals to tank services.
 
 That limitation is important. The current model should **not** be presented as a tool that can accept any arbitrary site inventory or SDS library and automatically produce final RTD installation scope. A broader production version would need additional chemical coverage, controlled SDS or compatibility-matrix ingestion, confidence-scored mapping from actual chemicals to generic mechanism classes, tank inventory data, and multi-site validation.
