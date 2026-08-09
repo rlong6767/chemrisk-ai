@@ -1,6 +1,6 @@
 # Data Folder
 
-This folder contains **public schema files only** for the ChemRisk-AI Phase 1 capstone project.
+This folder contains public schema files only for the ChemRisk-AI Phase 1 capstone project.
 
 The raw source workbooks, site-specific chemical lists, tank mappings, and detailed audit notes are intentionally omitted from the public repository. The files in this folder are meant to document the expected input structures so the notebook and project design can be reviewed without exposing private engineering data.
 
@@ -8,22 +8,37 @@ The raw source workbooks, site-specific chemical lists, tank mappings, and detai
 
 | File | Purpose | Contains real project rows? |
 |---|---|---:|
-| `public_colab_values_schema.csv` | Schema for the structured chemical-pair table used by the public notebook. It documents the expected columns for chemical pair descriptors, mechanism flags, consequence/severity fields, engineered features, labeling-function outputs, and weak labels. | No |
-| `gold_set_audit_schema.csv` | Schema for the initial audited review table. It documents the columns used to capture expert/auditor review fields, RTD detectability judgments, RTD-required labels, control-failure-mode notes, and labeling-function diagnostics. | No |
-| `prospective_audit_schema.csv` | Schema for the prospective/stress-test audit table. It uses the same column structure as the gold-set audit schema but is intended for later review rows selected after earlier rule versions were frozen. | No |
+| `public_colab_values_schema.csv` | Schema for the structured chemical pair table used by the public notebook. It documents the expected columns for chemical pair descriptors, mechanism flags, consequence/severity fields, engineered features, labeling function outputs, and weak labels. | No |
+| `gold_set_audit_schema.csv` | Schema for the initial audited review table. It documents the columns used to capture expert/auditor review fields, RTD detectability judgments, RTD required labels, control failure mode notes, and labeling function diagnostics. | No |
+| `prospective_audit_schema.csv` | Schema for the prospective/stress test audit table. It uses the same column structure as the gold set audit schema but is intended for later review rows selected after earlier rule versions were frozen. | No |
 
 ## How these files are used
 
-The public notebook expects private or synthetic input files with the same column headers as these schema files.
+The public notebook expects input files with the same column structure, generalized chemical labels, generic chemical classes, and categorical value conventions used in the Phase 1 ChemRisk-AI workflow.
 
-In the public repository, these CSVs are intentionally empty except for headers. They are documentation artifacts, not training datasets.
+These schema files are included to document the expected structure of the private development inputs. They are not public training datasets, and they are not enough by themselves to make the notebook generalize to arbitrary site chemicals.
 
-To run the notebook end-to-end, provide one of the following:
+In the public repository, these CSVs are intentionally empty except for headers. They are documentation artifacts that show the shape of the private inputs while avoiding release of private source workbooks, site identifiers, tank IDs, raw engineering notes, and detailed audit comments.
 
-1. a private internal dataset matching these schemas, or
-2. a fully synthetic dataset with the same column names and compatible values.
+To run the notebook end-to-end, one of the following would be needed:
 
-Do **not** commit private source workbooks, real site identifiers, tank IDs, raw engineering notes, or detailed audit comments to the public repository.
+1. the original private/internal dataset prepared with the same generalized chemical-label and class conventions,
+2. a synthetic dataset created to match the same schema, chemical-class vocabulary, and allowed categorical values, or
+3. a new site dataset that has first been mapped, reviewed, and normalized into the same generic ChemRisk-AI feature format.
+
+A user should not assume that simply renaming their own chemical compatibility file to match these column headers is sufficient. Actual chemicals must be mapped to the generic labels/classes used by the model, and that mapping would require SME review, SDS or compatibility-matrix interpretation, concentration/grade checks, and validation of whether the modeled generic class is appropriate.
+
+Do not commit private source workbooks, real site identifiers, tank IDs, raw engineering notes, or detailed audit comments to the public repository.
+
+## Generic chemical vocabulary and mapping
+
+The model does not operate directly on raw chemical names from a site inventory. During the Phase 1 workflow, actual chemical identities were converted into sanitized generic chemical labels and broader generic chemical classes.
+
+For example, a private site chemical may be represented publicly as a generic label such as `strong_base_01`, `alkaline_silicate_01`, or `sulfonic_acid_surfactant_01`, with a corresponding class such as `alkali_base`, `alkaline_silicate`, or `acidic_anionic_surfactant`.
+
+A separate vocabulary file, `generic_chemical_vocabulary.csv`, documents the public generic labels/classes used by the ChemRisk-AI workflow. That file is intended to help reviewers understand the modeled chemical universe and how actual site chemicals would need to be mapped before using the notebook.
+
+A new site cannot simply rename its chemicals to match these labels. Mapping actual chemicals into the generic vocabulary requires SME review of SDS information, chemical function, concentration/grade, incompatibility behavior, and whether the modeled generic class is appropriate. If no appropriate generic class exists, the chemical should be treated as outside the current model scope until the vocabulary, labeling logic, and validation set are expanded.
 
 ## Schema overview
 
